@@ -18,8 +18,7 @@ def create_order(tickets: list,
             raise ValueError(
                 "Invalid date format."
             )
-        order.created_at = parsed_date
-        order.save(update_fields=["created_at"])
+        Order.objects.filter(id=order.id).update(created_at=parsed_date)
 
     for ticket_data in tickets:
         ticket = Ticket(
