@@ -72,7 +72,7 @@ class Order(models.Model):
                              related_name="users")
 
     def __str__(self) -> str:
-        return f"<Order: {self.created_at}>"
+        return self.created_at.strftime("%Y-%m-%d %H:%M:%S")
 
     class Meta:
         ordering = ["-created_at"]
@@ -101,10 +101,11 @@ class Ticket(models.Model):
         ]
 
     def __str__(self) -> str:
-        movie_title = self.movie_session.movie.title
-        show_time = self.movie_session.show_time
-        return (f"<Ticket: {movie_title} {show_time} "
-                f"(row: {self.row}, seat: {self.seat})>")
+        return (
+            f"{self.movie_session.movie.title} "
+            f"{self.movie_session.show_time.strftime("%Y-%m-%d %H:%M:%S")} "
+            f"(row: {self.row}, seat: {self.seat})"
+        )
 
     def clean(self) -> None:
         hall = self.movie_session.cinema_hall
