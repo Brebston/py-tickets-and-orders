@@ -71,11 +71,11 @@ class Order(models.Model):
                              on_delete=models.CASCADE,
                              related_name="users")
 
-    def __str__(self) -> str:
-        return f"<Order: {self.created_at}>"
-
     class Meta:
         ordering = ["-created_at"]
+
+    def __str__(self) -> str:
+        return str(self.created_at)
 
 
 class Ticket(models.Model):
@@ -103,8 +103,8 @@ class Ticket(models.Model):
     def __str__(self) -> str:
         movie_title = self.movie_session.movie.title
         show_time = self.movie_session.show_time
-        return (f"<Ticket: {movie_title} {show_time} "
-                f"(row: {self.row}, seat: {self.seat})>")
+        return (f"{movie_title} {show_time} "
+                f"(row: {self.row}, seat: {self.seat})")
 
     def clean(self) -> None:
         hall = self.movie_session.cinema_hall
